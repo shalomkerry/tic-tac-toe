@@ -1,11 +1,11 @@
 import {create} from 'zustand'
 import {combine} from 'zustand/middleware'
 const useGameStore = create(
-    combine({squares:Array(9).fill('23')},(set)=>{
+    combine({squares:Array(9).fill(null),xIsNext:true},(set)=>{
         return{
             setSquares: (nextSquares)=>{
                 set((state)=>{
-                    // squares:
+                    squares:
                     typeof nextSquares === 'function'?nextSquares(state.squares):nextSquares
 
                     if(nextSquares === state.squares){
@@ -17,7 +17,13 @@ const useGameStore = create(
                     return{squares:nextSquares}
                 })
 
-            }
+            },
+            setXIsNext:(nextXisNext)=>{
+                set((state)=>({
+                    xIsNext:
+                    typeof nextXisNext ==='function'? nextXisNext(state.xIsNext):nextXisNext
+                })
+    )}
         }
     }),
 )
